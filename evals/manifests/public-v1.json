@@ -1,0 +1,66 @@
+{
+  "schema_version": "0.1",
+  "revision": "public-v1",
+  "cases": [
+    {
+      "id": "dev-rewrite-brief",
+      "split": "development",
+      "prompt": "Rewrite the following project update for a technically literate reader. Keep every factual claim, remove repetition, and make the next action unmistakable. Use two short paragraphs.\n\nThe import is mostly done. We imported most of the records, and the records are now mostly in the new table. There are still some records left to import. The next step is to finish the import, after which we can start testing the import.",
+      "metadata": {
+        "task_type": "revision",
+        "genre": "project-update",
+        "constraints": "preserve-claims;remove-repetition;two-paragraphs"
+      }
+    },
+    {
+      "id": "dev-explain-mechanism",
+      "split": "development",
+      "prompt": "Explain why a small cache can make a command-line tool feel faster even when the underlying computation has not become cheaper. Write for a curious software developer who knows what a process and a file are but does not need implementation details. Use one concrete analogy and one caveat.",
+      "metadata": {
+        "task_type": "exposition",
+        "genre": "technical-explanation",
+        "constraints": "analogy;caveat;plain-language"
+      }
+    },
+    {
+      "id": "validation-profile",
+      "split": "validation",
+      "prompt": "Write a 250-350 word profile of a neighborhood repair shop that stays open late for people who work irregular hours. Include one specific object on the counter, one detail about the owner\u2019s routine, and one sentence that shows why customers return. Avoid promotional language and invented statistics.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "profile",
+        "constraints": "250-350-words;specific-detail;no-invented-statistics"
+      }
+    },
+    {
+      "id": "validation-editorial",
+      "split": "validation",
+      "prompt": "Turn these notes into a concise editorial paragraph of 130-180 words. The position is that a public library should lend practical tools alongside books. Acknowledge the strongest safety objection, answer it without dismissing it, and end with a concrete first step. Notes: borrowing saves money; many households need a drill only twice a year; staff would need inspection procedures; a pilot could start with simple hand tools; checkout records could show demand.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "editorial",
+        "constraints": "130-180-words;objection-and-answer;concrete-ending"
+      }
+    },
+    {
+      "id": "holdout-scene",
+      "split": "holdout",
+      "prompt": "Write a 300-400 word scene in which two siblings sort through a deceased relative\u2019s kitchen before an estate sale. The conflict should remain understated: one wants to keep objects, the other wants the room cleared. Use at least three sensory details and let one ordinary object change the direction of the conversation. Do not resolve the grief neatly.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "literary-scene",
+        "constraints": "300-400-words;understated-conflict;sensory-detail;open-ending"
+      }
+    },
+    {
+      "id": "holdout-revision",
+      "split": "holdout",
+      "prompt": "Revise the paragraph below for clarity and rhythm while preserving its meaning and its slightly skeptical tone. Do not add facts. Keep it between 110 and 160 words.\n\nOur town keeps announcing that the riverfront is becoming a destination, which is a curious way to describe a place where the same three food trucks park beside a fenced construction site. Still, on Saturday mornings the path fills with people walking dogs, pushing strollers, and pretending not to look at the cranes. The project may eventually produce the restaurants and shade trees promised in the brochures. For now, the riverfront is mostly a lesson in how quickly a rendering can acquire a past tense.",
+      "metadata": {
+        "task_type": "revision",
+        "genre": "cultural-criticism",
+        "constraints": "110-160-words;preserve-meaning;skeptical-tone;no-new-facts"
+      }
+    }
+  ]
+}

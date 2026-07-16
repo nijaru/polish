@@ -52,6 +52,15 @@ def _as_float(value: Any, field_name: str) -> float:
     return float(value)
 
 
+def _validate_schema_version(value: Mapping[str, Any], source: str) -> None:
+    schema_version = value.get("schema_version")
+    if schema_version != SCHEMA_VERSION:
+        raise EvaluationError(
+            f"{source} uses schema version {schema_version!r}, "
+            f"expected {SCHEMA_VERSION!r}"
+        )
+
+
 @dataclass(frozen=True, slots=True)
 class PromptCase:
     """One fixed writing prompt in an evaluation manifest."""
@@ -121,6 +130,7 @@ class PromptManifest:
 
     @classmethod
     def from_dict(cls, value: Mapping[str, Any]) -> Self:
+        _validate_schema_version(value, "manifest")
         revision = _as_string(value.get("revision"), "revision")
         raw_cases = value.get("cases")
         if not isinstance(raw_cases, list):
@@ -167,7 +177,7 @@ class PromptManifest:
 class GenerationSettings:
     """Settings that must be recorded alongside every generated output."""
 
-    max_new_tokens: int = 512
+    max_new_tokens: int = 768
     temperature: float = 0.7
     top_p: float = 0.95
     seed: int = 0
@@ -243,14 +253,21 @@ class OutputRecord:
     model_id: str
     text: str
     metrics: Mapping[str, float]
+    raw_text: str | None = None
+    finish_reason: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result: dict[str, Any] = {
             "case_id": self.case_id,
             "model_id": self.model_id,
             "text": self.text,
             "metrics": dict(self.metrics),
         }
+        if self.raw_text is not None:
+            result["raw_text"] = self.raw_text
+        if self.finish_reason is not None:
+            result["finish_reason"] = self.finish_reason
+        return result
 
 
 class ModelAdapter(Protocol):
@@ -379,6 +396,16 @@ class EvaluationRunner:
                         adapter.spec.model_id,
                         text,
                         surface_metrics(text),
+                        (
+                            adapter.raw_text_for(case.case_id)
+                            if isinstance(adapter, RecordedOutputAdapter)
+                            else None
+                        ),
+                        (
+                            adapter.finish_reason_for(case.case_id)
+                            if isinstance(adapter, RecordedOutputAdapter)
+                            else None
+                        ),
                     )
                 )
 
@@ -401,6 +428,8 @@ class RecordedOutputAdapter:
     split: Split
     settings: GenerationSettings
     outputs: Mapping[str, str]
+    raw_outputs: Mapping[str, str] = field(default_factory=dict)
+    finish_reasons: Mapping[str, str] = field(default_factory=dict)
 
     @classmethod
     def from_path(cls, path: Path) -> Self:
@@ -416,11 +445,12 @@ class RecordedOutputAdapter:
             ) from error
         if not isinstance(value, dict):
             raise EvaluationError("recorded outputs root must be an object")
+        _validate_schema_version(value, "recorded outputs")
         raw_model = value.get("model")
         raw_revision = value.get("manifest_revision")
         raw_split = value.get("split")
         raw_settings = value.get("settings")
-        raw_outputs = value.get("outputs")
+        raw_output_items = value.get("outputs")
         if not isinstance(raw_model, Mapping):
             raise EvaluationError("recorded outputs must contain a model object")
         manifest_revision = _as_string(raw_revision, "manifest_revision")
@@ -431,10 +461,12 @@ class RecordedOutputAdapter:
         if not isinstance(raw_settings, Mapping):
             raise EvaluationError("recorded outputs must contain a settings object")
         settings = GenerationSettings.from_dict(raw_settings)
-        if not isinstance(raw_outputs, list):
+        if not isinstance(raw_output_items, list):
             raise EvaluationError("recorded outputs must contain an outputs array")
         outputs: dict[str, str] = {}
-        for item in raw_outputs:
+        raw_outputs: dict[str, str] = {}
+        finish_reasons: dict[str, str] = {}
+        for item in raw_output_items:
             if not isinstance(item, Mapping):
                 raise EvaluationError("each recorded output must be an object")
             try:
@@ -447,12 +479,22 @@ class RecordedOutputAdapter:
             if case_id in outputs:
                 raise EvaluationError(f"duplicate recorded output for {case_id!r}")
             outputs[case_id] = text
+            raw_text = item.get("raw_text")
+            if raw_text is not None:
+                raw_outputs[case_id] = _as_string(raw_text, "output.raw_text")
+            finish_reason = item.get("finish_reason")
+            if finish_reason is not None:
+                finish_reasons[case_id] = _as_string(
+                    finish_reason, "output.finish_reason"
+                )
         return cls(
             ModelSpec.from_dict(raw_model),
             manifest_revision,
             split,
             settings,
             outputs,
+            raw_outputs,
+            finish_reasons,
         )
 
     def validate_contract(
@@ -476,6 +518,20 @@ class RecordedOutputAdapter:
                 f"recorded outputs for {self.spec.model_id!r} use different "
                 "generation settings"
             )
+        expected_case_ids = {case.case_id for case in manifest.for_split(split)}
+        actual_case_ids = set(self.outputs)
+        missing = expected_case_ids - actual_case_ids
+        extra = actual_case_ids - expected_case_ids
+        if missing:
+            raise EvaluationError(
+                f"recorded outputs for {self.spec.model_id!r} are missing "
+                f"cases: {', '.join(sorted(missing))}"
+            )
+        if extra:
+            raise EvaluationError(
+                f"recorded outputs for {self.spec.model_id!r} contain unexpected "
+                f"cases: {', '.join(sorted(extra))}"
+            )
 
     def generate(self, case: PromptCase, settings: GenerationSettings) -> str:
         del settings
@@ -486,3 +542,13 @@ class RecordedOutputAdapter:
                 f"recorded outputs for {self.spec.model_id!r} are missing "
                 f"{case.case_id!r}"
             ) from error
+
+    def raw_text_for(self, case_id: str) -> str | None:
+        """Return optional runtime text retained alongside visible output."""
+
+        return self.raw_outputs.get(case_id)
+
+    def finish_reason_for(self, case_id: str) -> str | None:
+        """Return the runtime stop reason when the capture recorded one."""
+
+        return self.finish_reasons.get(case_id)

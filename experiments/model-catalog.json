@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.1",
+  "checked_at": "2026-07-16",
+  "size_note": "estimated_download_gib values are hf download --dry-run snapshots and may change as Hub artifacts change",
+  "models": [
+    {
+      "key": "gemma4-e4b-it",
+      "base_model": "google/gemma-4-E4B-it",
+      "mlx_repo": "mlx-community/unsloth-gemma-4-E4B-it-qat-oQ4",
+      "quantization": "mlx-qat-oQ4",
+      "estimated_download_gib": 5.4,
+      "role": "first-local-baseline",
+      "status": "ready"
+    },
+    {
+      "key": "gemma4-12b-it",
+      "base_model": "google/gemma-4-12B-it",
+      "mlx_repo": "mlx-community/gemma-4-12B-it-qat-OptiQ-4bit",
+      "quantization": "mlx-qat-optiq-4bit",
+      "estimated_download_gib": 9.0,
+      "role": "next-size-comparison",
+      "status": "planned"
+    },
+    {
+      "key": "mellum2-12b-instruct",
+      "base_model": "JetBrains/Mellum2-12B-A2.5B-Instruct",
+      "mlx_repo": "jedisct1/Mellum2-12B-A2.5B-Instruct-mlx",
+      "quantization": "mlx-conversion",
+      "estimated_download_gib": 24.3,
+      "role": "specialist-challenger",
+      "status": "planned"
+    },
+    {
+      "key": "qwen3.6-27b",
+      "base_model": "Qwen/Qwen3.6-27B",
+      "mlx_repo": "mlx-community/Qwen3.6-27B-OptiQ-4bit",
+      "quantization": "mlx-optiq-4bit",
+      "estimated_download_gib": 20.0,
+      "role": "large-reference-or-teacher",
+      "status": "later"
+    }
+  ]
+}

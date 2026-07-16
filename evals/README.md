@@ -25,6 +25,11 @@ sentence and paragraph variety, instruction adherence, and reader preference.
 
 Detector scores are explicitly out of scope as an optimization target.
 
+The contract is deliberately runtime-agnostic. A Gemma, Mellum, or Qwen run
+uses the same prompt manifest and report builder; only the capture adapter and
+model metadata change. This lets us compare model size, quantization, and
+fine-tuning without changing the experiment itself.
+
 ## Versioned manifest
 
 Manifests are JSON files with a stable revision and an explicit split on every
@@ -53,7 +58,9 @@ outside the repository and record only their revision in reports.
 
 The first runner consumes outputs captured by any local model runtime. This
 keeps the evaluation contract independent of a particular inference library.
-Each recorded-output file contains model identity and one output per case:
+Each recorded-output file contains model identity and one output per case. The
+`text` field is the user-facing response used for metrics; runtimes that emit
+internal reasoning may also retain their exact output in `raw_text`:
 
 ```json
 {
@@ -61,7 +68,7 @@ Each recorded-output file contains model identity and one output per case:
   "manifest_revision": "holdout-2026-07-15",
   "split": "holdout",
   "settings": {
-    "max_new_tokens": 512,
+    "max_new_tokens": 768,
     "temperature": 0.7,
     "top_p": 0.95,
     "seed": 0
@@ -71,14 +78,15 @@ Each recorded-output file contains model identity and one output per case:
     "revision": "<commit-or-tag>",
     "quantization": "<serving-quantization>"
   },
-  "outputs": [{"case_id": "case-001", "text": "..."}]
+  "outputs": [{"case_id": "case-001", "text": "...", "raw_text": "...", "finish_reason": "stop"}]
 }
 ```
 
 The runtime-specific capture script is intentionally outside this package.
 Whatever local runtime is used must write this contract with the exact model
 revision and quantization. The evaluator rejects recorded files whose manifest
-revision, split, or generation settings do not match the requested run.
+revision, split, generation settings, or case set do not match the requested
+run.
 
 Once two model-output files have been captured for the same manifest, create a
 stable JSON report with:
@@ -95,3 +103,32 @@ uv --config-file /dev/null run polish evaluate \
 The report records model revisions, quantization, generation settings, raw
 outputs, and transparent surface measurements. These measurements are
 descriptive baselines, not a quality score or a substitute for human review.
+
+## Apple Silicon capture
+
+The first local runtime is MLX-LM. It uses Hugging Face Hub model IDs and
+downloads weights into the normal Hugging Face cache; model weights never belong
+in this repository. Create the regular-CPython MLX environment once, then run
+the capture script from the repository root:
+
+```bash
+uv --config-file /dev/null venv --python /opt/homebrew/bin/python3.14 .venv-mlx
+uv --config-file /dev/null pip install --python .venv-mlx/bin/python 'mlx-lm>=0.31.3'
+HF_HUB_DISABLE_XET=1 PYTHONPATH=src .venv-mlx/bin/python scripts/capture_mlx.py \
+  --model mlx-community/unsloth-gemma-4-E4B-it-qat-oQ4 \
+  --model-id mlx-community/unsloth-gemma-4-E4B-it-qat-oQ4 \
+  --quantization mlx-qat-oQ4 \
+  --manifest evals/manifests/public-v1.json \
+  --split validation \
+  --output runs/gemma-e4b/public-validation.json
+```
+
+The script resolves and records the Hub commit, exact generation settings,
+runtime details, and one output for every case in the selected split. The
+public manifest is a bring-up set, not the final sealed holdout; final model
+selection should use a private holdout manifest kept outside Git.
+
+`HF_HUB_DISABLE_XET=1` is included because the first E4B download stalled on
+this Mac while using the Xet transfer path; the normal HTTP Hub transfer
+resumed from the already cached shard and completed. Remove it if the local
+Hub transfer is healthy.

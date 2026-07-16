@@ -35,7 +35,7 @@ def _build_parser() -> ArgumentParser:
         choices=[split.value for split in Split],
         default=Split.HOLDOUT.value,
     )
-    evaluate.add_argument("--max-new-tokens", type=int, default=512)
+    evaluate.add_argument("--max-new-tokens", type=int, default=768)
     evaluate.add_argument("--temperature", type=float, default=0.7)
     evaluate.add_argument("--top-p", type=float, default=0.95)
     evaluate.add_argument("--seed", type=int, default=0)

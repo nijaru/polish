@@ -100,6 +100,7 @@ def test_recorded_output_adapter_loads_model_metadata(tmp_path: Path) -> None:
     path.write_text(
         json.dumps(
             {
+                "schema_version": "0.1",
                 "manifest_revision": "prompts-v1",
                 "split": "holdout",
                 "settings": GenerationSettings().to_dict(),
@@ -108,7 +109,14 @@ def test_recorded_output_adapter_loads_model_metadata(tmp_path: Path) -> None:
                     "revision": "abc123",
                     "quantization": "q4_k_m",
                 },
-                "outputs": [{"case_id": "case-1", "text": "Recorded."}],
+                "outputs": [
+                    {
+                        "case_id": "case-1",
+                        "text": "Recorded.",
+                        "raw_text": "<thought>Recorded.</thought>Recorded.",
+                        "finish_reason": "stop",
+                    }
+                ],
             }
         ),
         encoding="utf-8",
@@ -117,6 +125,8 @@ def test_recorded_output_adapter_loads_model_metadata(tmp_path: Path) -> None:
     adapter = RecordedOutputAdapter.from_path(path)
 
     assert adapter.spec.revision == "abc123"
+    assert adapter.raw_text_for("case-1") == "<thought>Recorded.</thought>Recorded."
+    assert adapter.finish_reason_for("case-1") == "stop"
     assert (
         adapter.generate(
             PromptCase("case-1", Split.HOLDOUT, "Prompt."), GenerationSettings()
