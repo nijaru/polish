@@ -1,6 +1,6 @@
 """Command-line entry point for the Polish research toolkit."""
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, BooleanOptionalAction
 from collections.abc import Sequence
 from pathlib import Path
 
@@ -35,13 +35,14 @@ def _build_parser() -> ArgumentParser:
         choices=[split.value for split in Split],
         default=Split.HOLDOUT.value,
     )
-    evaluate.add_argument("--max-new-tokens", type=int, default=768)
+    evaluate.add_argument("--max-new-tokens", type=int, default=16384)
     evaluate.add_argument("--temperature", type=float, default=0.7)
     evaluate.add_argument("--top-p", type=float, default=0.95)
     evaluate.add_argument("--seed", type=int, default=0)
     evaluate.add_argument(
         "--enable-thinking",
-        action="store_true",
+        action=BooleanOptionalAction,
+        default=True,
         help="Match recorded outputs captured with a reasoning channel.",
     )
     return parser

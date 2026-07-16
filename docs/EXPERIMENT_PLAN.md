@@ -20,16 +20,36 @@ to the models during tuning or selection.
 
 ## Current local comparison
 
-On 2026-07-16, Gemma 4 E4B and Gemma 4 12B were captured on the same public
-validation and holdout cases with `max_new_tokens=768`, `temperature=0.7`,
-`top_p=0.95`, `seed=0`, and the chat template's separate thinking channel
-disabled. Both models stopped normally on all four cases.
+The primary 2026-07-16 comparison keeps the Gemma chat template's separate
+thinking channel enabled for both models. It uses the same public validation
+and holdout cases with `max_new_tokens=16384`, `temperature=0.7`, `top_p=0.95`,
+and `seed=0`. All eight model/case outputs stopped normally and retain their
+raw thinking traces alongside the visible responses.
 
-The 12B outputs were 296 and 151 words on validation, and 378 and 130 words
-on holdout. E4B produced 252 and 134 words on validation, and 363 and 100
-words on holdout. The holdout revision asks for 110-160 words, so E4B missed
-that range while 12B landed inside it. These are useful instruction-adherence
+The report records these visible word counts:
+
+- **Validation:** E4B produced 234 and 159 words; 12B produced 272 and 144
+  words.
+- **Holdout:** E4B produced 368 and 114 words; 12B produced 340 and 119 words.
+
+The holdout revision asks for 110-160 words, and both models landed inside that
+range under the thinking-enabled condition. These are instruction-adherence
 signals, not a quality verdict; the reports still need human judgments.
+
+The larger budget is deliberate rather than a quality claim. At 8,192 tokens,
+12B's holdout revision exhausted the limit after composing a complete draft in
+its thinking trace and repeatedly checking its word count. At 16,384 it
+finished with a visible 119-word response. Thinking therefore remains the
+primary research condition, while `--no-enable-thinking` is an explicit
+direct-writing ablation. The longer budget has a material latency cost,
+especially for 12B.
+
+An earlier 768-token, direct-writing control is retained in
+`runs/comparison-v2/`; it is useful for isolating the cost of the reasoning
+channel but is not the primary comparison.
+
+The thinking-enabled reports are `runs/comparison-v6/gemma-validation-thinking-report.json`
+and `runs/comparison-v6/gemma-holdout-thinking-report.json`.
 
 The 12B OptiQ artifact requires the optional `mlx-optiq` registrar and MLX-LM
 from the source tree. Its pinned Hub revision and runtime setup are recorded in

@@ -183,17 +183,17 @@ class PromptManifest:
 class GenerationSettings:
     """Settings that must be recorded alongside every generated output."""
 
-    max_new_tokens: int = 768
+    max_new_tokens: int = 16384
     temperature: float = 0.7
     top_p: float = 0.95
     seed: int = 0
-    enable_thinking: bool = False
+    enable_thinking: bool = True
 
     @classmethod
     def from_dict(cls, value: Mapping[str, Any]) -> Self:
         return cls(
             max_new_tokens=_as_int(
-                value.get("max_new_tokens", 512), "settings.max_new_tokens"
+                value.get("max_new_tokens", 16384), "settings.max_new_tokens"
             ),
             temperature=_as_float(
                 value.get("temperature", 0.7), "settings.temperature"
@@ -201,7 +201,7 @@ class GenerationSettings:
             top_p=_as_float(value.get("top_p", 0.95), "settings.top_p"),
             seed=_as_int(value.get("seed", 0), "settings.seed"),
             enable_thinking=_as_bool(
-                value.get("enable_thinking", False), "settings.enable_thinking"
+                value.get("enable_thinking", True), "settings.enable_thinking"
             ),
         )
 

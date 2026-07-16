@@ -98,9 +98,15 @@ def test_surface_metrics_are_transparent_and_deterministic() -> None:
 def test_generation_settings_record_chat_template_thinking_mode() -> None:
     settings = GenerationSettings(enable_thinking=True)
 
+    assert settings.max_new_tokens == 16384
     assert settings.to_dict()["enable_thinking"] is True
     assert GenerationSettings.from_dict(settings.to_dict()) == settings
-    assert GenerationSettings.from_dict({}).enable_thinking is False
+    assert GenerationSettings.from_dict({}).max_new_tokens == 16384
+    assert GenerationSettings.from_dict({}).enable_thinking is True
+    assert (
+        GenerationSettings.from_dict({"enable_thinking": False}).enable_thinking
+        is False
+    )
 
 
 def test_recorded_output_adapter_loads_model_metadata(tmp_path: Path) -> None:

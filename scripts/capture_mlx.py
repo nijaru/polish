@@ -52,13 +52,14 @@ def _parser() -> argparse.ArgumentParser:
         default=Split.HOLDOUT.value,
     )
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--max-new-tokens", type=int, default=768)
+    parser.add_argument("--max-new-tokens", type=int, default=16384)
     parser.add_argument("--temperature", type=float, default=0.7)
     parser.add_argument("--top-p", type=float, default=0.95)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument(
         "--enable-thinking",
-        action="store_true",
+        action=argparse.BooleanOptionalAction,
+        default=True,
         help="Ask the model's chat template for a separate reasoning channel.",
     )
     parser.add_argument(

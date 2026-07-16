@@ -68,10 +68,11 @@ internal reasoning may also retain their exact output in `raw_text`:
   "manifest_revision": "holdout-2026-07-15",
   "split": "holdout",
   "settings": {
-    "max_new_tokens": 768,
+    "max_new_tokens": 16384,
     "temperature": 0.7,
     "top_p": 0.95,
-    "seed": 0
+    "seed": 0,
+    "enable_thinking": true
   },
   "model": {
     "id": "google/gemma-4-E4B-it",
@@ -103,9 +104,11 @@ uv --config-file /dev/null run polish evaluate \
 The report records model revisions, quantization, generation settings, raw
 outputs, and transparent surface measurements. These measurements are
 descriptive baselines, not a quality score or a substitute for human review.
-The default capture explicitly disables the Gemma chat template's separate
-thinking channel so the token budget measures the requested writing; use
-`--enable-thinking` only for a deliberate reasoning-channel experiment.
+The default capture explicitly enables the Gemma chat template's separate
+thinking channel and uses a 16,384-token budget so longer planning traces have
+room to reach the requested response. This is intentionally expensive for
+thinking-enabled models; use `--no-enable-thinking` only for a deliberate
+direct-writing ablation.
 
 ## Apple Silicon capture
 
