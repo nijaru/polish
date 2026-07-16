@@ -57,7 +57,8 @@ The minimum useful training record is:
 Do not add private writing, credentials, scraped material, or copyrighted text
 without a documented right to use it.
 
-`authored-seed-v0.json` is a metadata-only tracked manifest for a small
-project-authored fixture. Its raw examples live under the ignored
-`data/raw/authored-seed-v0/` path, are licensed in the manifest for local
-research/SFT use, and are intentionally not committed.
+`authored-seed-v0.json` is a metadata-only tracked manifest for the first small
+project-authored corpus slice: 18 records across generation and revision
+tasks. Its raw examples live under the ignored `data/raw/authored-seed-v0/`
+path, are licensed in the manifest for local research/SFT use, and are
+intentionally not committed.

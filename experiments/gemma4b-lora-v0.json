@@ -1,0 +1,53 @@
+{
+  "schema_version": "0.1",
+  "experiment_id": "gemma4b-lora-v0",
+  "hypothesis": "A small authored brief-to-prose slice can teach clearer local writing behavior without changing the base model.",
+  "data_manifest": "../data/manifests/authored-seed-v0.json",
+  "source_splits": ["train", "validation"],
+  "excluded_splits": ["holdout"],
+  "training_data_dir": "../data/processed/gemma4b-lora-v0",
+  "base_model": {
+    "id": "mlx-community/unsloth-gemma-4-E4B-it-qat-oQ4",
+    "revision": "eaa5413e7ee2ce04f6e9544c06b420b365b0bfce",
+    "quantization": "mlx-qat-oQ4"
+  },
+  "runtime": {
+    "name": "mlx-lm",
+    "version": "0.31.3",
+    "fine_tune_type": "lora",
+    "mask_prompt": true
+  },
+  "training_config": "gemma4b-lora-v0.yaml",
+  "status": "smoke-complete",
+  "training_result": {
+    "iterations": 18,
+    "trainable_parameters_millions": 0.442,
+    "validation_loss_first": 4.17,
+    "validation_loss_last": 3.806,
+    "note": "The short run confirms the adapter path and data boundary; it is not a quality claim."
+  },
+  "evaluation_result": {
+    "generation_settings": {
+      "enable_thinking": true,
+      "max_new_tokens": 16384,
+      "temperature": 0.7,
+      "top_p": 0.95,
+      "seed": 0
+    },
+    "all_outputs_finished": "stop",
+    "validation_words": {
+      "base": 196.5,
+      "adapter": 194.5
+    },
+    "holdout_words": {
+      "base": 241.0,
+      "adapter": 252.5
+    },
+    "decision": "Surface metrics changed, but the slice is too small for a quality verdict; human review and a larger corpus are required."
+  },
+  "outputs": {
+    "adapter": "../runs/adapters/gemma4b-lora-v0",
+    "validation_report": "../runs/gemma4b-lora-v0/validation-report.json",
+    "holdout_report": "../runs/gemma4b-lora-v0/holdout-report.json"
+  }
+}

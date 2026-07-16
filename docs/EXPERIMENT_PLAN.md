@@ -114,11 +114,19 @@ The preferred data sources are:
 - authored briefs, outlines, revision prompts, and target passages;
 - human-created revision pairs and preference judgments.
 
-The first data-gate fixture is `data/manifests/authored-seed-v0.json`. It uses
-project-authored examples under a local-only raw-data policy, records the
-license and rights note on every record, and keeps the raw JSONL outside Git.
-The manifest validator must pass before this data can be used to configure an
-SFT/LoRA run.
+The first local corpus slice is `data/manifests/authored-seed-v0.json`: 18
+project-authored records across generation and revision tasks, split into 9
+train, 4 validation, and 5 holdout examples. It uses a local-only raw-data
+policy, records the license and rights note on every record, and keeps the raw
+JSONL outside Git. The manifest validator must pass before this data can be used
+to configure an SFT/LoRA run.
+
+The first E4B LoRA smoke run is recorded in
+`experiments/gemma4b-lora-v0.json`. It completed 18 iterations and all adapter
+outputs stopped normally on the public validation and holdout cases. The
+adapter changed surface metrics, but this corpus is too small for a quality
+conclusion; human review and a larger licensed slice are required before
+training decisions are made.
 
 We should not use scraped text with unclear rights, private beta material, or
 model-generated prose as unquestioned ground truth. Synthetic examples may be

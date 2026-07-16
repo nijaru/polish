@@ -1,0 +1,22 @@
+model: mlx-community/unsloth-gemma-4-E4B-it-qat-oQ4
+train: true
+data: data/processed/gemma4b-lora-v0
+fine_tune_type: lora
+optimizer: adam
+seed: 0
+num_layers: 2
+batch_size: 1
+iters: 18
+val_batches: -1
+learning_rate: 0.00001
+steps_per_report: 1
+steps_per_eval: 6
+adapter_path: runs/adapters/gemma4b-lora-v0
+save_every: 6
+max_seq_length: 1024
+grad_checkpoint: false
+lora_parameters:
+  rank: 4
+  dropout: 0.05
+  scale: 8.0
+mask_prompt: true

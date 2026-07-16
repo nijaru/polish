@@ -53,9 +53,9 @@
     }
   },
   "counts": {
-    "train": 3,
-    "validation": 1,
-    "holdout": 2
+    "train": 9,
+    "validation": 4,
+    "holdout": 5
   },
   "records": [
     {
@@ -105,6 +105,102 @@
       "source_id": "polish-authored-fixture",
       "line_number": 6,
       "sha256": "9c4513b74e6b519626399b49fbc5f5ffd4d38806f844ef79cf8e16c12dea1374"
+    },
+    {
+      "record_id": "authored-0007",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 7,
+      "sha256": "1be3eaf6379a0e361d3474e31e0af807d95354087ed55e60727390256a071db2"
+    },
+    {
+      "record_id": "authored-0008",
+      "split": "train",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 8,
+      "sha256": "9b79bf2cbd79ea584f826bbea74028d6ab60538235cebbfca071f9ce6888020c"
+    },
+    {
+      "record_id": "authored-0009",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 9,
+      "sha256": "42fd352c5464f91bb477f7b1fc2cdef241369953166c168b794069c12560a111"
+    },
+    {
+      "record_id": "authored-0010",
+      "split": "train",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 10,
+      "sha256": "32de2f4a0859e21285611ed0d9fa021543999b0a1ba189910aa785c1c7be7bbf"
+    },
+    {
+      "record_id": "authored-0011",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 11,
+      "sha256": "68ef293d85a4dea648634a9735026c148e751a3da096bdf50332675a92134d5e"
+    },
+    {
+      "record_id": "authored-0012",
+      "split": "train",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 12,
+      "sha256": "3de19b6fd78e12aa225e27e66be10e03e63b3a5717fc134ccda16df7f34508c0"
+    },
+    {
+      "record_id": "authored-0013",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 13,
+      "sha256": "fc7c9e8b559749cc7cb4cc835d17c14a3a3613cdd3a8f15887e4082360b4ad01"
+    },
+    {
+      "record_id": "authored-0014",
+      "split": "validation",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 14,
+      "sha256": "30509826ff8b6705130a5ebd9119e41f5727945180a10ad856da6befa88556ff"
+    },
+    {
+      "record_id": "authored-0015",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 15,
+      "sha256": "e45d2e7d63f249c4dc1744cc75c81f5cba7c01d312ebc91ee773891a4ca61fe1"
+    },
+    {
+      "record_id": "authored-0016",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 16,
+      "sha256": "99c1980b6287ee3f09582ee8269e6e06c7f133362e0262a96293593ddddfcb70"
+    },
+    {
+      "record_id": "authored-0017",
+      "split": "holdout",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 17,
+      "sha256": "5598130f2128d90f2bc56b5b5661550a12563e9830cf2c6044f8f084e3c2d312"
+    },
+    {
+      "record_id": "authored-0018",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 18,
+      "sha256": "d627fd14dbe013e41b7d951a2462775ed3a7e90e1bdc2ddcf10204d0376fd78f"
     }
   ]
 }
