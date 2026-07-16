@@ -18,6 +18,23 @@ The public manifest in `evals/manifests/public-v1.json` is only a bring-up
 fixture. A final comparison needs a private holdout manifest that is not shown
 to the models during tuning or selection.
 
+## Current local comparison
+
+On 2026-07-16, Gemma 4 E4B and Gemma 4 12B were captured on the same public
+validation and holdout cases with `max_new_tokens=768`, `temperature=0.7`,
+`top_p=0.95`, `seed=0`, and the chat template's separate thinking channel
+disabled. Both models stopped normally on all four cases.
+
+The 12B outputs were 296 and 151 words on validation, and 378 and 130 words
+on holdout. E4B produced 252 and 134 words on validation, and 363 and 100
+words on holdout. The holdout revision asks for 110-160 words, so E4B missed
+that range while 12B landed inside it. These are useful instruction-adherence
+signals, not a quality verdict; the reports still need human judgments.
+
+The 12B OptiQ artifact requires the optional `mlx-optiq` registrar and MLX-LM
+from the source tree. Its pinned Hub revision and runtime setup are recorded in
+the local capture output and the model catalog; Qwen3.6 remains deferred.
+
 ## Model order and size judgment
 
 The workflow is model-agnostic. We are not choosing a base model by intuition

@@ -17,9 +17,10 @@
       "base_model": "google/gemma-4-12B-it",
       "mlx_repo": "mlx-community/gemma-4-12B-it-qat-OptiQ-4bit",
       "quantization": "mlx-qat-optiq-4bit",
+      "runtime": "mlx-lm-git+mlx-optiq",
       "estimated_download_gib": 9.0,
       "role": "next-size-comparison",
-      "status": "planned"
+      "status": "ready"
     },
     {
       "key": "mellum2-12b-instruct",

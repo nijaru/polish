@@ -103,6 +103,9 @@ uv --config-file /dev/null run polish evaluate \
 The report records model revisions, quantization, generation settings, raw
 outputs, and transparent surface measurements. These measurements are
 descriptive baselines, not a quality score or a substitute for human review.
+The default capture explicitly disables the Gemma chat template's separate
+thinking channel so the token budget measures the requested writing; use
+`--enable-thinking` only for a deliberate reasoning-channel experiment.
 
 ## Apple Silicon capture
 
@@ -122,6 +125,21 @@ HF_HUB_DISABLE_XET=1 PYTHONPATH=src .venv-mlx/bin/python scripts/capture_mlx.py 
   --split validation \
   --output runs/gemma-e4b/public-validation.json
 ```
+
+The Gemma 4 12B OptiQ artifact in the model catalog uses the unified Gemma 4
+architecture. It needs the optional `mlx-optiq` registrar and MLX-LM from the
+source tree; the PyPI `mlx-lm==0.31.3` release alone does not expose that model
+type. The runtime used for the 12B comparison was installed with:
+
+```bash
+uv --config-file /dev/null pip install --python .venv-mlx/bin/python \
+  'mlx-optiq>=0.3.5' \
+  'mlx-lm @ git+https://github.com/ml-explore/mlx-lm.git@15b522f593b7ca5fbc0cac6f7572d40859d2d8fe'
+```
+
+`capture_mlx.py` imports `optiq` when it is available, so the same script works
+for the text-only E4B artifact and the unified 12B artifact. The exact runtime
+and model revision remain part of each recorded output.
 
 The script resolves and records the Hub commit, exact generation settings,
 runtime details, and one output for every case in the selected split. The

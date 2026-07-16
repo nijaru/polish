@@ -95,6 +95,14 @@ def test_surface_metrics_are_transparent_and_deterministic() -> None:
     assert metrics["repeated_trigram_rate"] > 0
 
 
+def test_generation_settings_record_chat_template_thinking_mode() -> None:
+    settings = GenerationSettings(enable_thinking=True)
+
+    assert settings.to_dict()["enable_thinking"] is True
+    assert GenerationSettings.from_dict(settings.to_dict()) == settings
+    assert GenerationSettings.from_dict({}).enable_thinking is False
+
+
 def test_recorded_output_adapter_loads_model_metadata(tmp_path: Path) -> None:
     path = tmp_path / "outputs.json"
     path.write_text(

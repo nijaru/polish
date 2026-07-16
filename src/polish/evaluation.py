@@ -52,6 +52,12 @@ def _as_float(value: Any, field_name: str) -> float:
     return float(value)
 
 
+def _as_bool(value: Any, field_name: str) -> bool:
+    if not isinstance(value, bool):
+        raise EvaluationError(f"{field_name} must be a boolean")
+    return value
+
+
 def _validate_schema_version(value: Mapping[str, Any], source: str) -> None:
     schema_version = value.get("schema_version")
     if schema_version != SCHEMA_VERSION:
@@ -181,6 +187,7 @@ class GenerationSettings:
     temperature: float = 0.7
     top_p: float = 0.95
     seed: int = 0
+    enable_thinking: bool = False
 
     @classmethod
     def from_dict(cls, value: Mapping[str, Any]) -> Self:
@@ -193,6 +200,9 @@ class GenerationSettings:
             ),
             top_p=_as_float(value.get("top_p", 0.95), "settings.top_p"),
             seed=_as_int(value.get("seed", 0), "settings.seed"),
+            enable_thinking=_as_bool(
+                value.get("enable_thinking", False), "settings.enable_thinking"
+            ),
         )
 
     def __post_init__(self) -> None:
@@ -203,12 +213,13 @@ class GenerationSettings:
         if not 0.0 < self.top_p <= 1.0:
             raise EvaluationError("top_p must be greater than 0 and at most 1")
 
-    def to_dict(self) -> dict[str, int | float]:
+    def to_dict(self) -> dict[str, int | float | bool]:
         return {
             "max_new_tokens": self.max_new_tokens,
             "temperature": self.temperature,
             "top_p": self.top_p,
             "seed": self.seed,
+            "enable_thinking": self.enable_thinking,
         }
 
 

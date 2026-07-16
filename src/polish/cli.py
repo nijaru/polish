@@ -39,6 +39,11 @@ def _build_parser() -> ArgumentParser:
     evaluate.add_argument("--temperature", type=float, default=0.7)
     evaluate.add_argument("--top-p", type=float, default=0.95)
     evaluate.add_argument("--seed", type=int, default=0)
+    evaluate.add_argument(
+        "--enable-thinking",
+        action="store_true",
+        help="Match recorded outputs captured with a reasoning channel.",
+    )
     return parser
 
 
@@ -59,6 +64,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             temperature=args.temperature,
             top_p=args.top_p,
             seed=args.seed,
+            enable_thinking=args.enable_thinking,
         )
         adapters = tuple(
             RecordedOutputAdapter.from_path(path) for path in args.recorded_output

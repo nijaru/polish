@@ -57,6 +57,11 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--top-p", type=float, default=0.95)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument(
+        "--enable-thinking",
+        action="store_true",
+        help="Ask the model's chat template for a separate reasoning channel.",
+    )
+    parser.add_argument(
         "--adapter-path",
         type=Path,
         help="Optional MLX-LM LoRA adapter directory.",
@@ -82,9 +87,14 @@ def _resolve_revision(model: str, revision: str | None) -> str:
 def _runtime_info(
     model: str, revision: str, adapter_path: Path | None
 ) -> dict[str, str]:
+    try:
+        optiq_version = importlib.metadata.version("mlx-optiq")
+    except importlib.metadata.PackageNotFoundError:
+        optiq_version = "not-installed"
     return {
         "runtime": "mlx-lm",
         "runtime_version": importlib.metadata.version("mlx-lm"),
+        "runtime_extension": f"mlx-optiq=={optiq_version}",
         "python": platform.python_version(),
         "platform": platform.platform(),
         "model_source": model,
@@ -93,17 +103,35 @@ def _runtime_info(
     }
 
 
+def _register_optional_model_extensions() -> None:
+    """Register optional MLX model implementations before loading a model."""
+
+    try:
+        importlib.import_module("optiq")
+    except ModuleNotFoundError as error:
+        if error.name != "optiq":
+            raise
+
+
 def _visible_text(raw_text: str) -> str:
     """Remove Gemma 4's internal thought channel from the presented answer."""
 
     if "<channel|>" in raw_text:
-        return raw_text.rsplit("<channel|>", 1)[1].strip()
-    return raw_text.strip()
+        visible_text = raw_text.rsplit("<channel|>", 1)[1]
+    elif "<|channel>final" in raw_text:
+        visible_text = raw_text.rsplit("<|channel>final", 1)[1]
+    elif "<|channel>thought" in raw_text:
+        # A length-truncated thought channel has no user-facing answer.
+        return ""
+    else:
+        visible_text = raw_text
+    return visible_text.replace("<audio|>", "").strip()
 
 
 def _capture(args: argparse.Namespace) -> dict[str, Any]:
     # Keep optional runtime imports out of the core package and its tests.
     mx: Any = importlib.import_module("mlx.core")
+    _register_optional_model_extensions()
     mlx_lm: Any = importlib.import_module("mlx_lm")
     make_sampler: Any = importlib.import_module("mlx_lm.sample_utils").make_sampler
 
@@ -114,6 +142,7 @@ def _capture(args: argparse.Namespace) -> dict[str, Any]:
         temperature=args.temperature,
         top_p=args.top_p,
         seed=args.seed,
+        enable_thinking=args.enable_thinking,
     )
     revision = _resolve_revision(args.model, args.revision)
     model_id = args.model_id or args.model
@@ -132,6 +161,7 @@ def _capture(args: argparse.Namespace) -> dict[str, Any]:
         prompt = tokenizer.apply_chat_template(
             [{"role": "user", "content": case.prompt}],
             add_generation_prompt=True,
+            enable_thinking=settings.enable_thinking,
         )
         responses = mlx_lm.stream_generate(
             model,
