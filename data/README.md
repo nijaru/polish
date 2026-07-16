@@ -1,7 +1,14 @@
 # Data policy
 
 Datasets are not committed by default. Keep local copies under `data/raw/` or
-`data/processed/`; those paths are ignored by git.
+`data/processed/`; those paths are ignored by git. The tracked dataset manifest
+contract is defined in
+[`dataset-manifest.schema.json`](dataset-manifest.schema.json) and validated
+with:
+
+```bash
+polish validate-data --manifest data/manifests/authored-seed-v0.json
+```
 
 Every dataset used in an experiment needs a tracked manifest containing:
 
@@ -18,6 +25,13 @@ the brief or draft separate from the target passage, so we can evaluate
 generation, revision, and instruction adherence independently. Provenance is
 per record rather than only per file because a corpus may combine sources with
 different licenses.
+
+The manifest is the data gate. It records the source and rights policy,
+preprocessing and deduplication decisions, a deliberate train/validation/holdout
+policy, and a SHA-256 reference for every local record. The validator reads the
+ignored JSONL, checks each record against the tracked provenance, rejects
+duplicate content across splits, and requires holdout to be sealed and excluded
+from training and model selection.
 
 The minimum useful training record is:
 
@@ -42,3 +56,8 @@ The minimum useful training record is:
 
 Do not add private writing, credentials, scraped material, or copyrighted text
 without a documented right to use it.
+
+`authored-seed-v0.json` is a metadata-only tracked manifest for a small
+project-authored fixture. Its raw examples live under the ignored
+`data/raw/authored-seed-v0/` path, are licensed in the manifest for local
+research/SFT use, and are intentionally not committed.

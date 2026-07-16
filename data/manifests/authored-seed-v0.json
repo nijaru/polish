@@ -1,0 +1,110 @@
+{
+  "schema_version": "0.1",
+  "dataset_id": "authored-seed",
+  "revision": "authored-seed-v0",
+  "record_schema": "../training-record.schema.json",
+  "data_root": "../raw/authored-seed-v0",
+  "raw_records": "records.jsonl",
+  "source_policy": {
+    "raw_content_policy": "local-only",
+    "allowed_source_kinds": [
+      "authored",
+      "permissive-license",
+      "public-domain",
+      "user-provided"
+    ]
+  },
+  "sources": [
+    {
+      "id": "polish-authored-fixture",
+      "kind": "authored",
+      "origin": "local://polish-authored-fixture",
+      "license": "CC BY 4.0",
+      "rights_note": "Project-authored examples for research and SFT with attribution to Nijaru/Polish.",
+      "acquired_at": "2026-07-16"
+    }
+  ],
+  "preprocessing": [
+    "Examples were authored directly as standalone brief-to-target records.",
+    "No scraped, private, or model-generated text is included."
+  ],
+  "deduplication": [
+    "Canonical content hashes ignore record identity, split assignment, and provenance.",
+    "Duplicate content is rejected across the entire dataset."
+  ],
+  "split_policy": {
+    "train": {
+      "purpose": "adapter fitting candidates only",
+      "allowed_for_training": true,
+      "used_for_model_selection": false,
+      "sealed": false
+    },
+    "validation": {
+      "purpose": "model and hyperparameter selection",
+      "allowed_for_training": false,
+      "used_for_model_selection": true,
+      "sealed": false
+    },
+    "holdout": {
+      "purpose": "final comparison only",
+      "allowed_for_training": false,
+      "used_for_model_selection": false,
+      "sealed": true
+    }
+  },
+  "counts": {
+    "train": 3,
+    "validation": 1,
+    "holdout": 2
+  },
+  "records": [
+    {
+      "record_id": "authored-0001",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 1,
+      "sha256": "6f41477d31ebc152ee9e0172ab5d7c28c898c45977f6dd189dcbe98488fca9d4"
+    },
+    {
+      "record_id": "authored-0002",
+      "split": "train",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 2,
+      "sha256": "73456fd458f7d2d823334f5e3f50648993e1edd497e95a4d8d5ceebe11cd1fe0"
+    },
+    {
+      "record_id": "authored-0003",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 3,
+      "sha256": "385ad48951e74c3d67c1f308d3a9cfab43cdeb329d56300e86ad672f7af6a255"
+    },
+    {
+      "record_id": "authored-0004",
+      "split": "validation",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 4,
+      "sha256": "b211105c1a6404b57d27a016823ef87b68bb4c9efe146491e588b37ab488a14f"
+    },
+    {
+      "record_id": "authored-0005",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 5,
+      "sha256": "18f975c178a6a2db7e22c52db0606a543a3c62978e6313480bed00e705d0043c"
+    },
+    {
+      "record_id": "authored-0006",
+      "split": "holdout",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 6,
+      "sha256": "9c4513b74e6b519626399b49fbc5f5ffd4d38806f844ef79cf8e16c12dea1374"
+    }
+  ]
+}

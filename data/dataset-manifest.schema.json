@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/nijaru/polish/data/dataset-manifest.schema.json",
+  "title": "Polish dataset manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "revision",
+    "record_schema",
+    "data_root",
+    "raw_records",
+    "source_policy",
+    "sources",
+    "preprocessing",
+    "deduplication",
+    "split_policy",
+    "counts",
+    "records"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "revision": {"type": "string", "minLength": 1},
+    "record_schema": {"type": "string", "minLength": 1},
+    "data_root": {"type": "string", "minLength": 1},
+    "raw_records": {"type": "string", "minLength": 1},
+    "source_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["raw_content_policy", "allowed_source_kinds"],
+      "properties": {
+        "raw_content_policy": {"const": "local-only"},
+        "allowed_source_kinds": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "authored",
+              "permissive-license",
+              "public-domain",
+              "user-provided"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "preprocessing": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1
+    },
+    "deduplication": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1
+    },
+    "split_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["train", "validation", "holdout"],
+      "properties": {
+        "train": {"$ref": "#/$defs/split_policy_entry"},
+        "validation": {"$ref": "#/$defs/split_policy_entry"},
+        "holdout": {"$ref": "#/$defs/split_policy_entry"}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["train", "validation", "holdout"],
+      "properties": {
+        "train": {"type": "integer", "minimum": 1},
+        "validation": {"type": "integer", "minimum": 1},
+        "holdout": {"type": "integer", "minimum": 1}
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/record_reference"}
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "origin", "license", "rights_note", "acquired_at"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {
+          "enum": [
+            "authored",
+            "permissive-license",
+            "public-domain",
+            "user-provided"
+          ]
+        },
+        "origin": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "rights_note": {"type": "string", "minLength": 1},
+        "acquired_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      }
+    },
+    "split_policy_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purpose",
+        "allowed_for_training",
+        "used_for_model_selection",
+        "sealed"
+      ],
+      "properties": {
+        "purpose": {"type": "string", "minLength": 1},
+        "allowed_for_training": {"type": "boolean"},
+        "used_for_model_selection": {"type": "boolean"},
+        "sealed": {"type": "boolean"}
+      }
+    },
+    "record_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_id", "split", "task", "source_id", "line_number", "sha256"],
+      "properties": {
+        "record_id": {"type": "string", "minLength": 1},
+        "split": {"enum": ["train", "validation", "holdout"]},
+        "task": {"enum": ["generation", "revision", "critique", "outline"]},
+        "source_id": {"type": "string", "minLength": 1},
+        "line_number": {"type": "integer", "minimum": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

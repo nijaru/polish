@@ -5,6 +5,7 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from polish import __version__
+from polish.data_contract import DataContractError, validate_data_manifest
 from polish.evaluation import (
     EvaluationError,
     EvaluationRunner,
@@ -45,6 +46,10 @@ def _build_parser() -> ArgumentParser:
         default=True,
         help="Match recorded outputs captured with a reasoning channel.",
     )
+    validate_data = subparsers.add_parser(
+        "validate-data", help="validate a tracked dataset manifest and local records"
+    )
+    validate_data.add_argument("--manifest", type=Path, required=True)
     return parser
 
 
@@ -53,6 +58,16 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     parser = _build_parser()
     args = parser.parse_args(argv)
+    if args.command == "validate-data":
+        try:
+            summary = validate_data_manifest(args.manifest)
+        except DataContractError as error:
+            parser.error(str(error))
+        print(
+            f"validated data manifest {summary.dataset_id}@{summary.revision} "
+            f"({summary.record_count} records)"
+        )
+        return 0
     if args.command != "evaluate":
         parser.print_help()
         return 0

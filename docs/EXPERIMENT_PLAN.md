@@ -114,6 +114,12 @@ The preferred data sources are:
 - authored briefs, outlines, revision prompts, and target passages;
 - human-created revision pairs and preference judgments.
 
+The first data-gate fixture is `data/manifests/authored-seed-v0.json`. It uses
+project-authored examples under a local-only raw-data policy, records the
+license and rights note on every record, and keeps the raw JSONL outside Git.
+The manifest validator must pass before this data can be used to configure an
+SFT/LoRA run.
+
 We should not use scraped text with unclear rights, private beta material, or
 model-generated prose as unquestioned ground truth. Synthetic examples may be
 useful as labeled augmentation, but they stay identifiable and must not replace
