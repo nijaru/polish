@@ -16,6 +16,14 @@ the reviewer's working view:
   --seed 0
 ```
 
+Render the JSON as a readable local Markdown document for review:
+
+```bash
+.venv/bin/python scripts/render_blind_review.py \
+  --input runs/gemma4b-lora-v1/blind-review.json \
+  --output runs/gemma4b-lora-v1/blind-review.md
+```
+
 The packet contains the prompt, two responses labeled only `A` and `B`, and
 blank fields for pairwise preference, seven short rubric dimensions, and
 notes. It contains no model IDs or reasoning traces. The key maps labels back
