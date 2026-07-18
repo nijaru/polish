@@ -1,0 +1,375 @@
+{
+  "schema_version": "0.1",
+  "dataset_id": "writing-seed",
+  "revision": "writing-seed-v1",
+  "record_schema": "../training-record.schema.json",
+  "data_root": "../raw/writing-seed-v1",
+  "raw_records": "records.jsonl",
+  "source_policy": {
+    "raw_content_policy": "local-only",
+    "allowed_source_kinds": [
+      "authored",
+      "permissive-license",
+      "public-domain",
+      "user-provided"
+    ]
+  },
+  "sources": [
+    {
+      "id": "polish-authored-fixture",
+      "kind": "authored",
+      "origin": "local://polish-authored-fixture",
+      "license": "CC BY 4.0",
+      "rights_note": "Project-authored examples for research and SFT with attribution to Nijaru/Polish.",
+      "acquired_at": "2026-07-16"
+    },
+    {
+      "id": "standard-wind",
+      "kind": "public-domain",
+      "origin": "https://github.com/standardebooks/kenneth-grahame_the-wind-in-the-willows/tree/3377cb42ec6a711e3463fff957131eafbf80d547",
+      "license": "CC0 1.0 / U.S. public domain",
+      "rights_note": "Standard Ebooks releases its edition work under CC0 1.0; the underlying work is believed to be in the U.S. public domain.",
+      "acquired_at": "2026-07-17"
+    },
+    {
+      "id": "standard-pride",
+      "kind": "public-domain",
+      "origin": "https://github.com/standardebooks/jane-austen_pride-and-prejudice/tree/59e21f2da09be16b2bdf0bb9a94ce7911452ee55",
+      "license": "CC0 1.0 / U.S. public domain",
+      "rights_note": "Standard Ebooks releases its edition work under CC0 1.0; the underlying work is believed to be in the U.S. public domain.",
+      "acquired_at": "2026-07-17"
+    },
+    {
+      "id": "standard-alice",
+      "kind": "public-domain",
+      "origin": "https://github.com/standardebooks/lewis-carroll_alices-adventures-in-wonderland/tree/dfe3e6099b7633b729bec1ce65a66997c515c845",
+      "license": "CC0 1.0 / U.S. public domain",
+      "rights_note": "Standard Ebooks releases its edition work under CC0 1.0; the underlying work is believed to be in the U.S. public domain.",
+      "acquired_at": "2026-07-17"
+    }
+  ],
+  "preprocessing": [
+    "Combined the existing project-authored fixture with six excerpts each from three pinned Standard Ebooks source repositories.",
+    "Public-domain excerpts were selected as complete paragraphs and normalized only for whitespace and invisible word-joiner characters.",
+    "Briefs and task metadata were authored locally; source prose was not paraphrased or mixed with model output."
+  ],
+  "deduplication": [
+    "Canonical content hashes ignore record identity, split assignment, and provenance.",
+    "Duplicate content is rejected across the entire dataset."
+  ],
+  "split_policy": {
+    "train": {
+      "purpose": "adapter fitting candidates only",
+      "allowed_for_training": true,
+      "used_for_model_selection": false,
+      "sealed": false
+    },
+    "validation": {
+      "purpose": "model and hyperparameter selection",
+      "allowed_for_training": false,
+      "used_for_model_selection": true,
+      "sealed": false
+    },
+    "holdout": {
+      "purpose": "final comparison only",
+      "allowed_for_training": false,
+      "used_for_model_selection": false,
+      "sealed": true
+    }
+  },
+  "counts": {
+    "train": 15,
+    "validation": 10,
+    "holdout": 11
+  },
+  "records": [
+    {
+      "record_id": "authored-0001",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 1,
+      "sha256": "6f41477d31ebc152ee9e0172ab5d7c28c898c45977f6dd189dcbe98488fca9d4"
+    },
+    {
+      "record_id": "authored-0002",
+      "split": "train",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 2,
+      "sha256": "73456fd458f7d2d823334f5e3f50648993e1edd497e95a4d8d5ceebe11cd1fe0"
+    },
+    {
+      "record_id": "authored-0003",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 3,
+      "sha256": "385ad48951e74c3d67c1f308d3a9cfab43cdeb329d56300e86ad672f7af6a255"
+    },
+    {
+      "record_id": "authored-0004",
+      "split": "validation",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 4,
+      "sha256": "b211105c1a6404b57d27a016823ef87b68bb4c9efe146491e588b37ab488a14f"
+    },
+    {
+      "record_id": "authored-0005",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 5,
+      "sha256": "18f975c178a6a2db7e22c52db0606a543a3c62978e6313480bed00e705d0043c"
+    },
+    {
+      "record_id": "authored-0006",
+      "split": "holdout",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 6,
+      "sha256": "9c4513b74e6b519626399b49fbc5f5ffd4d38806f844ef79cf8e16c12dea1374"
+    },
+    {
+      "record_id": "authored-0007",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 7,
+      "sha256": "1be3eaf6379a0e361d3474e31e0af807d95354087ed55e60727390256a071db2"
+    },
+    {
+      "record_id": "authored-0008",
+      "split": "train",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 8,
+      "sha256": "9b79bf2cbd79ea584f826bbea74028d6ab60538235cebbfca071f9ce6888020c"
+    },
+    {
+      "record_id": "authored-0009",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 9,
+      "sha256": "42fd352c5464f91bb477f7b1fc2cdef241369953166c168b794069c12560a111"
+    },
+    {
+      "record_id": "authored-0010",
+      "split": "train",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 10,
+      "sha256": "32de2f4a0859e21285611ed0d9fa021543999b0a1ba189910aa785c1c7be7bbf"
+    },
+    {
+      "record_id": "authored-0011",
+      "split": "train",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 11,
+      "sha256": "68ef293d85a4dea648634a9735026c148e751a3da096bdf50332675a92134d5e"
+    },
+    {
+      "record_id": "authored-0012",
+      "split": "train",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 12,
+      "sha256": "3de19b6fd78e12aa225e27e66be10e03e63b3a5717fc134ccda16df7f34508c0"
+    },
+    {
+      "record_id": "authored-0013",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 13,
+      "sha256": "fc7c9e8b559749cc7cb4cc835d17c14a3a3613cdd3a8f15887e4082360b4ad01"
+    },
+    {
+      "record_id": "authored-0014",
+      "split": "validation",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 14,
+      "sha256": "30509826ff8b6705130a5ebd9119e41f5727945180a10ad856da6befa88556ff"
+    },
+    {
+      "record_id": "authored-0015",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 15,
+      "sha256": "e45d2e7d63f249c4dc1744cc75c81f5cba7c01d312ebc91ee773891a4ca61fe1"
+    },
+    {
+      "record_id": "authored-0016",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 16,
+      "sha256": "99c1980b6287ee3f09582ee8269e6e06c7f133362e0262a96293593ddddfcb70"
+    },
+    {
+      "record_id": "authored-0017",
+      "split": "holdout",
+      "task": "revision",
+      "source_id": "polish-authored-fixture",
+      "line_number": 17,
+      "sha256": "5598130f2128d90f2bc56b5b5661550a12563e9830cf2c6044f8f084e3c2d312"
+    },
+    {
+      "record_id": "authored-0018",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "polish-authored-fixture",
+      "line_number": 18,
+      "sha256": "d627fd14dbe013e41b7d951a2462775ed3a7e90e1bdc2ddcf10204d0376fd78f"
+    },
+    {
+      "record_id": "public-wind-0001",
+      "split": "train",
+      "task": "generation",
+      "source_id": "standard-wind",
+      "line_number": 19,
+      "sha256": "f4a7b71d4cc2ef540eebc28e85ff0610f00993f67e034591d7b19abe6140bd84"
+    },
+    {
+      "record_id": "public-wind-0002",
+      "split": "train",
+      "task": "generation",
+      "source_id": "standard-wind",
+      "line_number": 20,
+      "sha256": "90c1e0464c45807855df81bd0b6ccf0278f8ac5daab74686ec31bc68339cca21"
+    },
+    {
+      "record_id": "public-wind-0003",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "standard-wind",
+      "line_number": 21,
+      "sha256": "a7a35c3eb3cd9996e1aa55f025de43beead08a13a2c2731b85677fc7c3ef6287"
+    },
+    {
+      "record_id": "public-wind-0004",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "standard-wind",
+      "line_number": 22,
+      "sha256": "935a72db26b8d0fa53777aefecf0142cdd6dc9bb3cde4ff0d241e1b2876a3138"
+    },
+    {
+      "record_id": "public-wind-0005",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "standard-wind",
+      "line_number": 23,
+      "sha256": "8e94e15169c01d2f513be6acbefb6cbb83da1acbe45ce817ff8b52f4cce61bd1"
+    },
+    {
+      "record_id": "public-wind-0006",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "standard-wind",
+      "line_number": 24,
+      "sha256": "49fdc47b34abdf56d7087c66644491c20e0642e46613484f5ab8543e2e5f20d3"
+    },
+    {
+      "record_id": "public-pride-0001",
+      "split": "train",
+      "task": "generation",
+      "source_id": "standard-pride",
+      "line_number": 25,
+      "sha256": "44c29bf7c381efc840c47de80708e92c6fa744f8b04110c86039efc5bb14ee1a"
+    },
+    {
+      "record_id": "public-pride-0002",
+      "split": "train",
+      "task": "generation",
+      "source_id": "standard-pride",
+      "line_number": 26,
+      "sha256": "fc8519771a3f94fe081abe5438950bc1cb30409c8fcbef1f7422f2c60d799788"
+    },
+    {
+      "record_id": "public-pride-0003",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "standard-pride",
+      "line_number": 27,
+      "sha256": "2c1ba42dd7cd2833fde1f30895a5947f5a67005845974c1b36eb50e4bf99685f"
+    },
+    {
+      "record_id": "public-pride-0004",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "standard-pride",
+      "line_number": 28,
+      "sha256": "4661b10993b2b33cf484f09a2bbed8bfc86dcf9b509fd628d0a400e7701e569c"
+    },
+    {
+      "record_id": "public-pride-0005",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "standard-pride",
+      "line_number": 29,
+      "sha256": "376aa3bdc8cc197caf6ac3e7284d4658dd5b29bc0dfda5114a2f0e4206e4bf7d"
+    },
+    {
+      "record_id": "public-pride-0006",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "standard-pride",
+      "line_number": 30,
+      "sha256": "c8767368ad03f9cccb9fa5a5e72f09833444b14bc59b247708276b3f2d702127"
+    },
+    {
+      "record_id": "public-alice-0001",
+      "split": "train",
+      "task": "generation",
+      "source_id": "standard-alice",
+      "line_number": 31,
+      "sha256": "843ab3fd0bb1dfa6d754a3ec320dc1377c2dfb2bf4ece16c5a3961c23810ad65"
+    },
+    {
+      "record_id": "public-alice-0002",
+      "split": "train",
+      "task": "generation",
+      "source_id": "standard-alice",
+      "line_number": 32,
+      "sha256": "4f03e3a2468951871aae5319fc552d4ab44847abd5e11c1d574e5f8fd62e35f9"
+    },
+    {
+      "record_id": "public-alice-0003",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "standard-alice",
+      "line_number": 33,
+      "sha256": "875f2a572440a5faac858ed59106af31d6aabe2243491276e64b234ff8b025e1"
+    },
+    {
+      "record_id": "public-alice-0004",
+      "split": "validation",
+      "task": "generation",
+      "source_id": "standard-alice",
+      "line_number": 34,
+      "sha256": "63933b693bba45962d8a32a5736d10de570aa65db834ab09e8cf9d85be06fa99"
+    },
+    {
+      "record_id": "public-alice-0005",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "standard-alice",
+      "line_number": 35,
+      "sha256": "bdf28025cb9bb97c354bbebcf216dfa4efdd730a5a666b77aefc3ff05f2b68b9"
+    },
+    {
+      "record_id": "public-alice-0006",
+      "split": "holdout",
+      "task": "generation",
+      "source_id": "standard-alice",
+      "line_number": 36,
+      "sha256": "00ed03d1d69c7024fce8386058e4eeb54d2503116fc53869f2ff4b3b0f18e4f0"
+    }
+  ]
+}

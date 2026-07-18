@@ -62,3 +62,13 @@ project-authored corpus slice: 18 records across generation and revision
 tasks. Its raw examples live under the ignored `data/raw/authored-seed-v0/`
 path, are licensed in the manifest for local research/SFT use, and are
 intentionally not committed.
+
+`writing-seed-v1.json` combines that fixture with 18 paragraph-level excerpts
+from three pinned Standard Ebooks repositories. The source records identify
+the title, repository commit, XHTML path, paragraph number, and local
+transformation. Standard Ebooks describes its editions as based on works
+believed to be in the U.S. public domain and dedicates its own edition work to
+CC0; see its [public-domain policy](https://standardebooks.org/about/standard-ebooks-and-the-public-domain).
+The combined local slice has 15 train, 10 validation, and 11 holdout records.
+The raw JSONL remains ignored and is rebuilt with
+`scripts/prepare_public_domain_seed.py` from pinned source checkouts.

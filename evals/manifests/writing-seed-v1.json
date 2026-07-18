@@ -1,0 +1,237 @@
+{
+  "schema_version": "0.1",
+  "revision": "writing-seed-v1-eval",
+  "cases": [
+    {
+      "id": "authored-0004",
+      "split": "validation",
+      "prompt": "Task: revision\n\nTighten this announcement without losing the practical details or sounding celebratory.\n\nDraft:\n\nThe community room is excited to announce that there will be a new schedule for workshops starting next month, which is something that should be helpful for everyone who wants to attend.",
+      "metadata": {
+        "task_type": "revision",
+        "genre": "announcement",
+        "tone": "plain",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "authored-0005",
+      "split": "holdout",
+      "prompt": "Task: generation\n\nWrite a 110-150 word scene about a small-town cinema showing its last afternoon film.\n\nConstraints:\n- Use specific physical details.\n- Do not explain the emotion directly.\n- Keep the ending quiet.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "scene",
+        "tone": "quiet",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "authored-0006",
+      "split": "holdout",
+      "prompt": "Task: revision\n\nRewrite this note as a clear, non-defensive explanation for a resident who reported a missed collection.\n\nDraft:\n\nWe did not collect your bins because the route was affected by circumstances and our team is sorry if this caused any inconvenience. We are working to make sure this does not happen again.",
+      "metadata": {
+        "task_type": "revision",
+        "genre": "service-note",
+        "tone": "accountable",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "authored-0013",
+      "split": "validation",
+      "prompt": "Task: generation\n\nWrite a 90-120 word profile of a public swimming pool that opens before school.\n\nConstraints:\n- Use two concrete details.\n- Include a staff routine.\n- Avoid calling it essential or beloved.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "profile",
+        "tone": "observational",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "authored-0014",
+      "split": "validation",
+      "prompt": "Task: revision\n\nMake this grant update factual and specific without overstating the result.\n\nDraft:\n\nThe grant has been a huge success and helped us make great progress on the program. We have reached many people and are excited about what comes next.",
+      "metadata": {
+        "task_type": "revision",
+        "genre": "grant-update",
+        "tone": "measured",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "authored-0015",
+      "split": "validation",
+      "prompt": "Task: generation\n\nWrite a short scene at a farmers market just before a storm.\n\nConstraints:\n- Include a practical choice.\n- Use sound and color.\n- End before the rain begins.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "scene",
+        "tone": "compressed",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "authored-0016",
+      "split": "holdout",
+      "prompt": "Task: generation\n\nWrite a 100-140 word scene at a ferry terminal after the final departure of the day.\n\nConstraints:\n- Do not explain the mood.\n- Include a staff routine and one discarded object.\n- End with a physical action.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "scene",
+        "tone": "quiet",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "authored-0017",
+      "split": "holdout",
+      "prompt": "Task: revision\n\nRewrite this school notice so families know what changed and what they need to do.\n\nDraft:\n\nDue to a scheduling issue, the school musical rehearsal will be different this week. Students should check with their teachers and make sure they know where to go.",
+      "metadata": {
+        "task_type": "revision",
+        "genre": "school-notice",
+        "tone": "clear",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "authored-0018",
+      "split": "holdout",
+      "prompt": "Task: generation\n\nWrite a 100-130 word profile of a laundromat that stays open late for night-shift workers.\n\nConstraints:\n- Include a repeated owner routine.\n- Use one specific object.\n- Show why customers return without praise.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "profile",
+        "tone": "observational",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-wind-0003",
+      "split": "validation",
+      "prompt": "Task: generation\n\nWrite a 130-180 word first encounter with a river, treating the water as an active presence.\n\nConstraints:\n- Use sound and motion.\n- Keep the observer's response physical.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "description",
+        "tone": "wondering",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-wind-0004",
+      "split": "validation",
+      "prompt": "Task: generation\n\nWrite a 120-160 word quiet observation of a possible home seen across a river.\n\nConstraints:\n- Begin with a small visual detail.\n- Delay the identity of the watcher until the end.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "observation",
+        "tone": "curious",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-wind-0005",
+      "split": "holdout",
+      "prompt": "Task: generation\n\nWrite a 100-140 word conversation about taking an unplanned day on the water.\n\nConstraints:\n- Include a minor mishap.\n- Keep the invitation open-ended.\n- Do not summarize the lesson.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "dialogue",
+        "tone": "easygoing",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-wind-0006",
+      "split": "holdout",
+      "prompt": "Task: generation\n\nWrite a 90-130 word description of a boat entering a quiet waterway near a mill.\n\nConstraints:\n- Layer water, plant, and machine sounds.\n- End with a brief spoken reaction.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "description",
+        "tone": "serene",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-pride-0003",
+      "split": "validation",
+      "prompt": "Task: generation\n\nWrite a 150-190 word social profile that contrasts a charming newcomer with his proud friend at a public gathering.\n\nConstraints:\n- Use the crowd's changing judgment.\n- Include status as a social fact, not a moral lecture.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "profile",
+        "tone": "observant",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-pride-0004",
+      "split": "validation",
+      "prompt": "Task: generation\n\nWrite a 130-170 word account of two guests at a dance, contrasting one person's ease with another's reserve.\n\nConstraints:\n- Use specific actions rather than labels alone.\n- Show how the room forms an opinion.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "social-observation",
+        "tone": "wry",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-pride-0005",
+      "split": "holdout",
+      "prompt": "Task: generation\n\nWrite a 35-50 word aftermath in which a lively person retells an awkward exchange to friends.\n\nConstraints:\n- Keep the event small.\n- Show the storyteller's pleasure in the ridiculous.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "aftermath",
+        "tone": "playful",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-pride-0006",
+      "split": "holdout",
+      "prompt": "Task: generation\n\nWrite a 110-140 word comparison of two friends whose temperaments differ despite their loyalty.\n\nConstraints:\n- Use behavior and circumstance.\n- Avoid turning the contrast into a simple verdict.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "character-sketch",
+        "tone": "measured",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-alice-0003",
+      "split": "validation",
+      "prompt": "Task: generation\n\nWrite a 100-140 word chase through an unfamiliar building after a fleeting glimpse of someone ahead.\n\nConstraints:\n- Use pace and a changing interior.\n- End in an unexpectedly empty room.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "chase",
+        "tone": "urgent",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-alice-0004",
+      "split": "validation",
+      "prompt": "Task: generation\n\nWrite a 120-160 word scene in which a person discovers a beautiful place that is physically out of reach.\n\nConstraints:\n- Use the doorway as the central image.\n- End with a practical but impossible wish.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "fantasy-scene",
+        "tone": "yearning",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-alice-0005",
+      "split": "holdout",
+      "prompt": "Task: generation\n\nWrite a 120-160 word comic interior monologue about a person whose changing body creates practical problems.\n\nConstraints:\n- Address one body part directly.\n- Mix worry with an absurd plan.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "comic-monologue",
+        "tone": "inventive",
+        "dataset_revision": "writing-seed-v1"
+      }
+    },
+    {
+      "id": "public-alice-0006",
+      "split": "holdout",
+      "prompt": "Task: generation\n\nWrite a 90-130 word encounter in which a frightened person asks a hurried stranger for help.\n\nConstraints:\n- Use a dropped object to interrupt the exchange.\n- Let the stranger escape without explanation.",
+      "metadata": {
+        "task_type": "generation",
+        "genre": "encounter",
+        "tone": "flustered",
+        "dataset_revision": "writing-seed-v1"
+      }
+    }
+  ]
+}

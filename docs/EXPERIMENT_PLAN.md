@@ -128,6 +128,20 @@ adapter changed surface metrics, but this corpus is too small for a quality
 conclusion; human review and a larger licensed slice are required before
 training decisions are made.
 
+The expanded `writing-seed-v1` slice adds 18 paragraph-level public-domain
+records from pinned Standard Ebooks editions to the 18-record authored fixture.
+It has 15 train, 10 validation, and 11 holdout records. The raw examples stay
+local; `scripts/prepare_public_domain_seed.py` records the source commit and
+paragraph reference for every public-domain record, and
+`scripts/build_eval_manifest.py` creates a target-free evaluation manifest.
+
+The next controlled run is `experiments/gemma4b-lora-v1.json`: 120 LoRA
+iterations on the train split, with validation used for training diagnostics
+and the sealed holdout reserved for the final comparison. Thinking remains
+enabled with the existing 16,384-token capture budget. The run does not earn a
+scaling decision from loss or surface metrics alone; the final gate is the
+blind human review described in `evals/HUMAN_REVIEW.md`.
+
 We should not use scraped text with unclear rights, private beta material, or
 model-generated prose as unquestioned ground truth. Synthetic examples may be
 useful as labeled augmentation, but they stay identifiable and must not replace

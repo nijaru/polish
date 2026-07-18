@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.1",
+  "experiment_id": "gemma4b-lora-v1",
+  "hypothesis": "Adding a small, provenance-tracked public-domain writing slice to the authored fixture will teach broader descriptive and scene-writing behavior without changing the base model.",
+  "data_manifest": "../data/manifests/writing-seed-v1.json",
+  "source_splits": ["train"],
+  "excluded_splits": ["validation", "holdout"],
+  "training_data_dir": "../data/processed/gemma4b-lora-v1",
+  "evaluation_manifest": "../evals/manifests/writing-seed-v1.json",
+  "evaluation_splits": ["validation", "holdout"],
+  "base_model": {
+    "id": "mlx-community/unsloth-gemma-4-E4B-it-qat-oQ4",
+    "revision": "eaa5413e7ee2ce04f6e9544c06b420b365b0bfce",
+    "quantization": "mlx-qat-oQ4"
+  },
+  "runtime": {
+    "name": "mlx-lm",
+    "version": "0.31.3",
+    "fine_tune_type": "lora",
+    "mask_prompt": true
+  },
+  "training_config": "gemma4b-lora-v1.yaml",
+  "status": "evaluation-complete-pending-human-review",
+  "training_result": {
+    "iterations": 120,
+    "trainable_parameters_millions": 0.442,
+    "validation_loss_first": 3.816,
+    "validation_loss_last": 3.315,
+    "note": "The expanded run completed cleanly; loss is a training diagnostic, not a writing-quality verdict."
+  },
+  "evaluation_result": {
+    "manifest_revision": "writing-seed-v1-eval",
+    "generation_settings": {
+      "enable_thinking": true,
+      "max_new_tokens": 16384,
+      "temperature": 0.7,
+      "top_p": 0.95,
+      "seed": 0
+    },
+    "validation": {
+      "cases": 10,
+      "all_outputs_finished": "stop",
+      "base_words": 176.5,
+      "adapter_words": 180.3,
+      "base_repeated_trigram_rate": 0.0088125594,
+      "adapter_repeated_trigram_rate": 0.0059467231,
+      "base_unique_word_ratio": 0.680724037,
+      "adapter_unique_word_ratio": 0.667405192
+    },
+    "holdout": {
+      "cases": 11,
+      "all_outputs_finished": "stop",
+      "base_words": 164.9090909,
+      "adapter_words": 168.9090909,
+      "base_repeated_trigram_rate": 0.0106020562,
+      "adapter_repeated_trigram_rate": 0.0095628068,
+      "base_unique_word_ratio": 0.703188431,
+      "adapter_unique_word_ratio": 0.687480956
+    },
+    "automatic_observation": "The adapter changed length and surface repetition metrics in both splits, while unique-word ratio fell. These signals do not establish better writing.",
+    "human_review": {
+      "packet": "../runs/gemma4b-lora-v1/blind-review.json",
+      "cases": 11,
+      "decision_rule": "Advance only if the adapter is preferred on at least 7 of 11 holdout cases, avoids clear instruction-adherence or factuality regressions, and shows no broad rubric regression.",
+      "status": "pending-user-review"
+    },
+    "decision": "Hold scaling decisions until the blind holdout review is completed."
+  },
+  "outputs": {
+    "adapter": "../runs/adapters/gemma4b-lora-v1",
+    "validation_report": "../runs/gemma4b-lora-v1/validation-report.json",
+    "holdout_report": "../runs/gemma4b-lora-v1/holdout-report.json",
+    "blind_review_packet": "../runs/gemma4b-lora-v1/blind-review.json"
+  }
+}
