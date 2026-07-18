@@ -1,0 +1,100 @@
+{
+  "schema_version": "0.1",
+  "experiment_id": "gemma4b-lora-v1",
+  "review_id": "5086a36b22e6471a",
+  "manifest_revision": "writing-seed-v1-eval",
+  "reviewer": {
+    "kind": "assistant-proxy",
+    "human": false,
+    "purpose": "Qualitative triage only; this does not replace the user's blind review."
+  },
+  "method": {
+    "blind_choice_recorded_before_unblinding": true,
+    "dimensions_considered": [
+      "specificity",
+      "coherence",
+      "meaningful_detail",
+      "repetition",
+      "rhythm",
+      "instruction_adherence",
+      "overall"
+    ],
+    "decision_rule": "The adapter would need at least 7 of 11 holdout preferences and no broad instruction-adherence or factuality regression to advance."
+  },
+  "case_reviews": [
+    {
+      "case_id": "authored-0005",
+      "blind_choice": "A",
+      "unblinded_preference": "base",
+      "notes": "A is a coherent, quiet scene with concrete details. B contains malformed phrasing and confusing invented details."
+    },
+    {
+      "case_id": "authored-0006",
+      "blind_choice": "neither",
+      "unblinded_preference": "neither",
+      "notes": "Both responses discuss how to revise instead of directly revising the note, and both invent placeholder reasons and dates."
+    },
+    {
+      "case_id": "authored-0016",
+      "blind_choice": "B",
+      "unblinded_preference": "base",
+      "notes": "B follows the staff routine, discarded-object, and physical-ending constraints directly. A is more abstract and ends less decisively."
+    },
+    {
+      "case_id": "authored-0017",
+      "blind_choice": "B",
+      "unblinded_preference": "base",
+      "notes": "Both are meta-level option menus rather than a direct notice. B is shorter and more actionable, but still uses unsupported placeholders."
+    },
+    {
+      "case_id": "authored-0018",
+      "blind_choice": "B",
+      "unblinded_preference": "base",
+      "notes": "B meets the requested length and supplies a repeated routine and object. A is too short and includes awkward, unclear wording."
+    },
+    {
+      "case_id": "public-alice-0005",
+      "blind_choice": "B",
+      "unblinded_preference": "adapter",
+      "notes": "B is a more coherent comic monologue with a practical problem and absurd plan. A is vivid but overinflated and less controlled."
+    },
+    {
+      "case_id": "public-alice-0006",
+      "blind_choice": "B",
+      "unblinded_preference": "adapter",
+      "notes": "B makes the frightened request and dropped-object interruption clearer; both satisfy the unexplained escape."
+    },
+    {
+      "case_id": "public-pride-0005",
+      "blind_choice": "B",
+      "unblinded_preference": "adapter",
+      "notes": "B gives the small exchange a clearer comic shape and more specific social observation."
+    },
+    {
+      "case_id": "public-pride-0006",
+      "blind_choice": "B",
+      "unblinded_preference": "base",
+      "notes": "B uses more concrete behavior and circumstance. Both lean on generic contrast language, but B is more grounded."
+    },
+    {
+      "case_id": "public-wind-0005",
+      "blind_choice": "A",
+      "unblinded_preference": "adapter",
+      "notes": "A includes an actual mishap and an open invitation. B keeps the exchange open but only anticipates the mishap."
+    },
+    {
+      "case_id": "public-wind-0006",
+      "blind_choice": "A",
+      "unblinded_preference": "base",
+      "notes": "A layers water, plant, and machine sound more coherently and ends with the requested brief reaction. B has a confusing shore/boat relationship."
+    }
+  ],
+  "summary": {
+    "base_wins": 6,
+    "adapter_wins": 4,
+    "neither": 1,
+    "adapter_meets_preference_gate": false,
+    "provisional_decision": "no-go-for-scaling",
+    "human_confirmation": "required"
+  }
+}

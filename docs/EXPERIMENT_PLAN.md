@@ -142,6 +142,12 @@ enabled with the existing 16,384-token capture budget. The run does not earn a
 scaling decision from loss or surface metrics alone; the final gate is the
 blind human review described in `evals/HUMAN_REVIEW.md`.
 
+An assistant-proxy triage of the blinded packet preferred the base on 6 cases,
+the adapter on 4, and neither on 1. It is recorded separately in
+`experiments/gemma4b-lora-v1-proxy-review.json` as a provisional no-go for
+scaling, explicitly not as human evidence. The user's blind review remains the
+final quality gate.
+
 We should not use scraped text with unclear rights, private beta material, or
 model-generated prose as unquestioned ground truth. Synthetic examples may be
 useful as labeled augmentation, but they stay identifiable and must not replace

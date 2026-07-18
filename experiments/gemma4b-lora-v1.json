@@ -64,6 +64,14 @@
       "decision_rule": "Advance only if the adapter is preferred on at least 7 of 11 holdout cases, avoids clear instruction-adherence or factuality regressions, and shows no broad rubric regression.",
       "status": "pending-user-review"
     },
+    "assistant_proxy_review": {
+      "report": "gemma4b-lora-v1-proxy-review.json",
+      "adapter_wins": 4,
+      "base_wins": 6,
+      "neither": 1,
+      "provisional_decision": "no-go-for-scaling",
+      "status": "triage-only-not-human-evidence"
+    },
     "decision": "Hold scaling decisions until the blind holdout review is completed."
   },
   "outputs": {
